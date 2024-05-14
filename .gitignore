@@ -1,0 +1,18 @@
+# private key
+**/*/id_rsa
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+**/*.tfstate
+**/*.tfstate.*
+
+#tf plan file
+**/*tfplan*
+
+# terraform lock
+**/.terraform.lock.hcl
+
+# kubeconfig
+**/kubeconfig
