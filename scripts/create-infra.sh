@@ -4,12 +4,13 @@ cd "$(dirname "$0")"
 # Create a bucket for tfstate
 aws s3 mb s3://tfstate-$(uuidgen | tr A-Z a-z)
 
-AWS_REGION=us-east-1
-TFSTATE_KEY=application-signals/demo-applications
-TFSTATE_BUCKET=$(aws s3 ls --output text | awk '{print $3}' | grep tfstate-)
-TFSTATE_REGION=$AWS_REGION
+export AWS_REGION=us-east-1
+export TFSTATE_KEY=application-signals/demo-applications
+export TFSTATE_BUCKET=$(aws s3 ls --output text | awk '{print $3}' | grep tfstate-)
+export TFSTATE_REGION=$AWS_REGION
 
 #Remove old TF Backend if exist
+echo "Removing existing tfstate"
 cd ../terraform
 if test -d .terraform; then
     rm -rf .terraform
@@ -29,5 +30,6 @@ if [ -f '.terraform.lock.hcl' ]; then
 fi
 
 # init new backend
+echo "init new backend"
 terraform init -backend-config="bucket=${TFSTATE_BUCKET}" -backend-config="key=${TFSTATE_KEY}" -backend-config="region=${TFSTATE_REGION}"
 terraform apply --auto-approve
