@@ -1,6 +1,5 @@
 #!/bin/bash
 cd "$(dirname "$0")"
-set -e
 
 # Create a bucket for tfstate
 aws s3 mb s3://tfstate-$(uuidgen | tr A-Z a-z)
