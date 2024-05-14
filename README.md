@@ -8,5 +8,5 @@ aws configure
 
 2. Build and push docker images
 ``` shell
-./push-ecr.sh
+./scripts/push-ecr.sh
 ```
