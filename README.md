@@ -1,4 +1,5 @@
 # EKS demo
+ref: [https://github.com/aws-observability/application-signals-demo](https://github.com/aws-observability/application-signals-demo)
 
 1. Create the infra
 ``` shell
