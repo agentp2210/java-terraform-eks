@@ -33,7 +33,6 @@ module "eks" {
   eks_managed_node_groups = {
     default = {
       desired_size = 3
-      iam_role_additional_policies = [data.aws_iam_policy.ecr_policy.arn]
       instance_types = ["t3.small"]
       tags = {
         Owner = "default"
