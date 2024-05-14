@@ -2,7 +2,9 @@
 cd "$(dirname "$0")"
 
 # Create a bucket for tfstate
-aws s3 mb s3://tfstate-$(uuidgen | tr A-Z a-z)
+if [ -z $(aws s3 ls --output text | awk '{print $3}' | grep tfstate-) ]; do
+    aws s3 mb s3://tfstate-$(uuidgen | tr A-Z a-z)
+fi
 
 export AWS_REGION=us-east-1
 export TFSTATE_KEY=application-signals/demo-applications
