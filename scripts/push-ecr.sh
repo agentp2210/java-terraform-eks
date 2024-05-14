@@ -19,6 +19,8 @@ if [ -z "$existing_images" ]; then
 fi
 
 # Push to ECR
+cd ..
+
 export ACCOUNT=`aws sts get-caller-identity | jq .Account -r`
 export REGION=$AWS_REGION
 
@@ -56,19 +58,23 @@ docker push ${REPOSITORY_PREFIX}/springcommunity/spring-petclinic-admin-server:l
 
 
 aws ecr create-repository --repository-name python-petclinic-insurance-service --region ${REGION} --no-cli-pager || true
-
-docker build -t insurance-service ./pet_clinic_insurance_service --no-cache
+if [ -z "$(docker images | grep "insurance-service")" ]; then
+    docker build -t insurance-service ./pet_clinic_insurance_service --no-cache
+fi
 docker tag insurance-service:latest ${REPOSITORY_PREFIX}/python-petclinic-insurance-service:latest
 docker push ${REPOSITORY_PREFIX}/python-petclinic-insurance-service:latest
 
 
 aws ecr create-repository --repository-name python-petclinic-billing-service --region ${REGION} --no-cli-pager || true
-
-docker build -t billing-service ./pet_clinic_billing_service --no-cache
+if [ -z "$(docker images | grep "billing-service")" ]; then
+    docker build -t billing-service ./pet_clinic_billing_service --no-cache
+fi
 docker tag billing-service:latest ${REPOSITORY_PREFIX}/python-petclinic-billing-service:latest
 docker push ${REPOSITORY_PREFIX}/python-petclinic-billing-service:latest
 
 aws ecr create-repository --repository-name traffic-generator --region ${REGION} --no-cli-pager || true
-docker build -t traffic-generator ./traffic-generator --no-cache
+if [ -z "$(docker images | grep "traffic-generator")" ]; then
+    docker build -t traffic-generator ./traffic-generator --no-cache
+fi
 docker tag traffic-generator:latest ${REPOSITORY_PREFIX}/traffic-generator:latest
 docker push ${REPOSITORY_PREFIX}/traffic-generator:latest
