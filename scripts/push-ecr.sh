@@ -22,7 +22,7 @@ fi
 cd ..
 
 export ACCOUNT=`aws sts get-caller-identity | jq .Account -r`
-export REGION=$AWS_REGION
+export REGION=us-east-1
 
 export REPOSITORY_PREFIX=${ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com
 
