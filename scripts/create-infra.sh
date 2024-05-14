@@ -11,6 +11,7 @@ TFSTATE_BUCKET=$(aws s3 ls --output text | awk '{print $3}' | grep tfstate-)
 TFSTATE_REGION=$AWS_REGION
 
 #Remove old TF Backend if exist
+cd ../terraform
 if test -d .terraform; then
     rm -rf .terraform
 fi
@@ -29,6 +30,5 @@ if [ -f '.terraform.lock.hcl' ]; then
 fi
 
 # init new backend
-cd ../terraform
 terraform init -backend-config="bucket=${TFSTATE_BUCKET}" -backend-config="key=${TFSTATE_KEY}" -backend-config="region=${TFSTATE_REGION}"
 terraform apply --auto-approve
