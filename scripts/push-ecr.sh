@@ -12,7 +12,8 @@ if [ -n $old_images ]; then
 fi
 
 # Build images if not exist
-if [ -z $(docker images | grep springcommunity | awk '{print $1}') ]; then
+existing_images=$(docker images | grep springcommunity | awk '{print $1}')
+if [ -z $existing_images ]; then
     ./mvnw clean install -P buildDocker
 fi
 
