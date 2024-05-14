@@ -2,7 +2,7 @@
 cd "$(dirname "$0")"
 
 # Create a bucket for tfstate
-if [ -z $(aws s3 ls --output text | awk '{print $3}' | grep tfstate-) ]; do
+if [ -z $(aws s3 ls --output text | awk '{print $3}' | grep tfstate-) ]; then
     aws s3 mb s3://tfstate-$(uuidgen | tr A-Z a-z)
 fi
 
