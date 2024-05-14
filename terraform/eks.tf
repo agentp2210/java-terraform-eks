@@ -96,8 +96,6 @@ module "eks" {
     }
   }
 
-  enable_cluster_creator_admin_permissions = true
-
   tags = {
     "karpenter.sh/discovery" = var.cluster_name
   }
