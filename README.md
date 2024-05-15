@@ -11,3 +11,8 @@ aws configure
 ``` shell
 ./scripts/push-ecr.sh
 ```
+
+3. Deploy k8s resources
+``` shell
+./scripts/deploy-k8s-res.sh
+```

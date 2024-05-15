@@ -16,6 +16,9 @@ db_endpoint=`terraform output -raw postgres_endpoint`
 host=$(echo $db_endpoint | awk -F ':' '{print $1}')
 port=$(echo $db_endpoint | awk -F ':' '{print $2}')
 
+TF_VAR_cluster_name=$(terraform output -raw cluster_name)
+aws eks update-kubeconfig --name $TF_VAR_cluster_name  --kubeconfig ~/.kube/config --region $REGION --alias $TF_VAR_cluster_name
+
 cd ../scripts/
 
 for config in $(ls ./sample-app/*.yaml)
