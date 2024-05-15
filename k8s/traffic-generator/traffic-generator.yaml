@@ -19,7 +19,7 @@ spec:
         image: 111122223333.dkr.ecr.us-west-2.amazonaws.com/traffic-generator:latest
         env:
         - name: URL
-          value: "http://SAMPLE_APP_END_POINT"
+          value: "SAMPLE_APP_END_POINT"
         - name: HIGH_LOAD_MAX
           value: "1600"
         - name: HIGH_LOAD_MIN

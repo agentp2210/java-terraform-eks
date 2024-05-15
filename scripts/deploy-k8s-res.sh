@@ -25,3 +25,10 @@ do
 done
 
 kubectl ${OPERATION} -f ../k8s/alb-ingress
+
+# Deploy traffic generator
+cd ../traffic-generator
+
+endpoint="http://$(kubectl get ingress -o json  --output jsonpath='{.items[0].status.loadBalancer.ingress[0].hostname}')"
+
+sed -e "s/SAMPLE_APP_END_POINT/$endpoint/g" traffic-generator.yaml
