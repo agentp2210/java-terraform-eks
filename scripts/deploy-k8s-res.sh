@@ -31,5 +31,4 @@ kubectl ${OPERATION} -f ./alb-ingress
 # Deploy traffic generator
 endpoint="http://$(kubectl get ingress -o json  --output jsonpath='{.items[0].status.loadBalancer.ingress[0].hostname}')"
 
-sed -e "s/SAMPLE_APP_END_POINT/$endpoint/g" ./traffic-generator/traffic-generator.yaml \
-    -e "s/111122223333.dkr.ecr.us-west-2/$ACCOUNT_ID.dkr.ecr.$REGION/g" | kubectl ${OPERATION} --namespace=$NAMESPACE -f -
+sed -e "s#SAMPLE_APP_END_POINT""#$endpoint#g" -e "s/111122223333.dkr.ecr.us-west-2/$ACCOUNT_ID.dkr.ecr.$REGION/g" ./traffic-generator/traffic-generator.yaml | kubectl ${OPERATION} --namespace=$NAMESPACE -f -
