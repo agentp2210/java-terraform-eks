@@ -19,11 +19,9 @@ port=$(echo $db_endpoint | awk -F ':' '{print $2}')
 TF_VAR_cluster_name=$(terraform output -raw cluster_name)
 aws eks update-kubeconfig --name $TF_VAR_cluster_name  --kubeconfig ~/.kube/config --region $REGION --alias $TF_VAR_cluster_name
 
-cd ../scripts/
-
-for config in $(ls ./k8s/*.yaml)
+for config in $(ls ../k8s/*.yaml)
 do
     sed -e "s/111122223333.dkr.ecr.us-west-2/$ACCOUNT_ID.dkr.ecr.$REGION/g" -e 's#\${REGION}'"#${REGION}#g" -e 's#\${DB_SERVICE_HOST}'"#${host}#g" $config | kubectl ${OPERATION} --namespace=$NAMESPACE -f -
 done
 
-kubectl ${OPERATION} -f ./sample-app/alb-ingress
+kubectl ${OPERATION} -f ../k8s/alb-ingress
