@@ -19,16 +19,17 @@ port=$(echo $db_endpoint | awk -F ':' '{print $2}')
 TF_VAR_cluster_name=$(terraform output -raw cluster_name)
 aws eks update-kubeconfig --name $TF_VAR_cluster_name  --kubeconfig ~/.kube/config --region $REGION --alias $TF_VAR_cluster_name
 
-for config in $(ls ../k8s/*.yaml)
+cd ../k8s
+
+for config in $(ls ./*.yaml)
 do
     sed -e "s/111122223333.dkr.ecr.us-west-2/$ACCOUNT_ID.dkr.ecr.$REGION/g" -e 's#\${REGION}'"#${REGION}#g" -e 's#\${DB_SERVICE_HOST}'"#${host}#g" $config | kubectl ${OPERATION} --namespace=$NAMESPACE -f -
 done
 
-kubectl ${OPERATION} -f ../k8s/alb-ingress
+kubectl ${OPERATION} -f ./alb-ingress
 
 # Deploy traffic generator
-cd ../traffic-generator
-
 endpoint="http://$(kubectl get ingress -o json  --output jsonpath='{.items[0].status.loadBalancer.ingress[0].hostname}')"
 
-sed -e "s/SAMPLE_APP_END_POINT/$endpoint/g" traffic-generator.yaml
+sed -e "s/SAMPLE_APP_END_POINT/$endpoint/g" ./traffic-generator/traffic-generator.yaml \
+    -e "s/111122223333.dkr.ecr.us-west-2/$ACCOUNT_ID.dkr.ecr.$REGION/g" | kubectl ${OPERATION} --namespace=$NAMESPACE -f -
