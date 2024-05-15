@@ -21,7 +21,7 @@ aws eks update-kubeconfig --name $TF_VAR_cluster_name  --kubeconfig ~/.kube/conf
 
 cd ../scripts/
 
-for config in $(ls ./sample-app/*.yaml)
+for config in $(ls ./k8s/*.yaml)
 do
     sed -e "s/111122223333.dkr.ecr.us-west-2/$ACCOUNT_ID.dkr.ecr.$REGION/g" -e 's#\${REGION}'"#${REGION}#g" -e 's#\${DB_SERVICE_HOST}'"#${host}#g" $config | kubectl ${OPERATION} --namespace=$NAMESPACE -f -
 done
