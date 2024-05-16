@@ -16,3 +16,6 @@
 
 # kubeconfig
 **/kubeconfig
+
+# terragrunt
+**/.terragrunt-cache/*
