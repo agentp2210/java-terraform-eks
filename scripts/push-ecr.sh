@@ -63,9 +63,9 @@ fi
 docker tag billing-service:latest ${REPOSITORY_PREFIX}/python-petclinic-billing-service:latest
 docker push ${REPOSITORY_PREFIX}/python-petclinic-billing-service:latest
 
-aws ecr create-repository --repository-name traffic-generator --region ${REGION} --no-cli-pager || true
-if [ -z "$(docker images | grep "traffic-generator")" ]; then
-    docker build -t traffic-generator ./traffic-generator --no-cache
-fi
-docker tag traffic-generator:latest ${REPOSITORY_PREFIX}/traffic-generator:latest
-docker push ${REPOSITORY_PREFIX}/traffic-generator:latest
+# aws ecr create-repository --repository-name traffic-generator --region ${REGION} --no-cli-pager || true
+# if [ -z "$(docker images | grep "traffic-generator")" ]; then
+#     docker build -t traffic-generator ./traffic-generator --no-cache
+# fi
+# docker tag traffic-generator:latest ${REPOSITORY_PREFIX}/traffic-generator:latest
+# docker push ${REPOSITORY_PREFIX}/traffic-generator:latest
