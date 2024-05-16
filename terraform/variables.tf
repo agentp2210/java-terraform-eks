@@ -2,12 +2,6 @@ variable "region" {
   default = "us-east-1"
 }
 
-variable "project_name" {
-  description = "The name of the project"
-  default     = "TEST"
-  type        = string
-}
-
 variable "instance_type" {
   description = "The EC2 Instance type"
   default     = "t2.micro"
@@ -38,10 +32,6 @@ variable "private_subnets_count" {
     condition     = var.private_subnets_count >= 2
     error_message = "Number of private subnets needs to be greater or equal than 2"
   }
-}
-
-variable "ssh_public_key" {
-  default = "./sshkey/id_rsa.pub"
 }
 
 variable "cluster_name" {
